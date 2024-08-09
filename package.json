@@ -1,0 +1,21 @@
+{
+    "name": "webhook-transformer",
+    "version": "1.0.0",
+    "description": "API para transformar webhooks y enviarlos a Google Chat",
+    "main": "index.js",
+    "scripts": {
+      "build": "netlify build",
+      "dev": "netlify dev",
+      "start": "netlify functions:serve"
+    },
+    "dependencies": {
+      "node-fetch": "^3.3.1"  // Asegúrate de que esta versión esté instalada
+    },
+    "devDependencies": {
+      "netlify-cli": "^16.0.0"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+  }
+  
