@@ -25,7 +25,7 @@ exports.handler = async (event) => {
           header: {
             title: `Build ${buildNumber} - ${appName}`,
             subtitle: `Estado: ${buildState.toUpperCase()}`,
-            imageUrl: data.app.icon || data.commit.user.picture,
+            imageUrl: "https://developers.google.com/chat/images/quickstart-app-avatar.png",
             imageStyle: "AVATAR"
           },
           sections: [
