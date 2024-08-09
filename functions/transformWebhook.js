@@ -89,7 +89,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'Webhook enviado correctamente a Google Chat' }),
+      body: JSON.stringify(googleChatPayload),
     };
   } catch (error) {
     return {
