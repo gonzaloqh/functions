@@ -1,0 +1,8 @@
+[build]
+  functions = "functions/"
+
+[[redirects]]
+  from = "/api/transform-webhook"
+  to = "/.netlify/functions/transformWebhook"
+  status = 200
+  method = "POST"
