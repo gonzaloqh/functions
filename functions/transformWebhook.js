@@ -10,6 +10,7 @@ exports.handler = async (event) => {
     const finishedDate = data.finished;
     const appName = data.app.name;
     const mergeBy = data.commit.user.name;
+    const branchName = data.branch.name;  // Extracción del nombre de la rama
     const downloadLinks = data.artifacts?.map(artifact => {
       const extension = artifact.name.split('.').pop().toUpperCase();
       return {
@@ -25,7 +26,7 @@ exports.handler = async (event) => {
       cards: [
         {
           header: {
-            title: `Build ${buildNumber} - ${appName}`,
+            title: `Buil ${appName} - Branch: ${branchName}`,
             subtitle: `Estado: ${stateEmoji} ${buildState}`,
             imageUrl: "https://developers.google.com/chat/images/quickstart-app-avatar.png",
             imageStyle: "AVATAR"
