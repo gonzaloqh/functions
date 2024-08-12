@@ -87,7 +87,7 @@ exports.handler = async (event) => {
       ]
     };
 
-    const googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAqTDcwSQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=0mMIFS2n1trg5Pgm9ftzJ4g2UID44t8VoRykxreN9cY';
+    const googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAuWppqUQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=TeZgmWj_1Gv5FLTIatL3IFw3tmeMR8ym5K7BCfMLvpI';
 
     const response = await fetch(googleChatWebhookUrl, {
       method: 'POST',
