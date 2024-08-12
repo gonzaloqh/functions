@@ -5,7 +5,7 @@ exports.handler = async (event) => {
     const data = JSON.parse(event.body);
 
     const buildNumber = data.buildInfo.id;
-    const buildState = data.state;
+    const buildState = data.state.toUpperCase();
     const creationDate = data.created;
     const finishedDate = data.finished;
     const appName = data.app.name;
@@ -18,15 +18,15 @@ exports.handler = async (event) => {
       };
     }) || [];
 
-    // Determina el color basado en el estado
-    const stateColor = buildState.toUpperCase() === 'SUCCESS' ? 'GREEN' : 'RED';
+    // Determina el emoji basado en el estado
+    const stateEmoji = buildState === 'SUCCESS' ? '🟢' : '🔴';
 
     const googleChatPayload = {
       cards: [
         {
           header: {
             title: `Build ${buildNumber} - ${appName}`,
-            subtitle: `Estado: ${buildState.toUpperCase()}`,
+            subtitle: `Estado: ${stateEmoji} ${buildState}`,
             imageUrl: "https://developers.google.com/chat/images/quickstart-app-avatar.png",
             imageStyle: "AVATAR"
           },
@@ -57,9 +57,9 @@ exports.handler = async (event) => {
                 {
                   keyValue: {
                     topLabel: "Estado",
-                    content: buildState.toUpperCase(),
+                    content: buildState,
                     contentMultiline: true,
-                    bottomLabel: stateColor === 'GREEN' ? "🟢" : "🔴",
+                    bottomLabel: stateEmoji,
                     icon: "DESCRIPTION"
                   }
                 }
