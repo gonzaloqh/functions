@@ -4,7 +4,6 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
 
-    // Definimos las variables comunes que usaremos en ambos casos
     const buildNumber = data.buildInfo.id;
     const buildState = data.state;
     const creationDate = data.created;
@@ -12,13 +11,16 @@ exports.handler = async (event) => {
     const appName = data.app.name;
     const mergeBy = data.commit.user.name;
     const downloadLinks = data.artifacts?.map(artifact => {
+      const extension = artifact.name.split('.').pop().toUpperCase();
       return {
-        "text": artifact.name,
+        "text": `Descargar .${extension}`,
         "url": artifact.url
       };
     }) || [];
 
-    // Creación del payload para Google Chat con "cards"
+    // Determina el color basado en el estado
+    const stateColor = buildState.toUpperCase() === 'SUCCESS' ? 'GREEN' : 'RED';
+
     const googleChatPayload = {
       cards: [
         {
@@ -50,6 +52,15 @@ exports.handler = async (event) => {
                     topLabel: "Mergeado por",
                     content: mergeBy,
                     icon: "PERSON"
+                  }
+                },
+                {
+                  keyValue: {
+                    topLabel: "Estado",
+                    content: buildState.toUpperCase(),
+                    contentMultiline: true,
+                    bottomLabel: stateColor === 'GREEN' ? "🟢" : "🔴",
+                    icon: "DESCRIPTION"
                   }
                 }
               ]
