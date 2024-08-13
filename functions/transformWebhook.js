@@ -18,6 +18,7 @@ exports.handler = async (event) => {
         "url": artifact.url
       };
     }) || [];
+    const environment = data.automation.environmentName;
 
     // Determina el emoji basado en el estado
     const stateEmoji = buildState === 'SUCCESS' ? '🟢' : '🔴';
@@ -26,7 +27,7 @@ exports.handler = async (event) => {
       cards: [
         {
           header: {
-            title: `Buil ${appName} - Branch: ${branchName}`,
+            title: `Build ${appName} - ${buildNumber}`,
             subtitle: `Estado: ${stateEmoji} ${buildState}`,
             imageUrl: "https://developers.google.com/chat/images/quickstart-app-avatar.png",
             imageStyle: "AVATAR"
@@ -34,6 +35,20 @@ exports.handler = async (event) => {
           sections: [
             {
               widgets: [
+                {
+                  keyValue: {
+                    topLabel: "Branch",
+                    content: branchName,
+                    icon: "CLOCK"
+                  }
+                },
+                {
+                  keyValue: {
+                    topLabel: "Environment",
+                    content: environment,
+                    icon: "CLOCK"
+                  }
+                },
                 {
                   keyValue: {
                     topLabel: "Fecha de Creación",
@@ -87,7 +102,8 @@ exports.handler = async (event) => {
       ]
     };
 
-    const googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAuWppqUQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=TeZgmWj_1Gv5FLTIatL3IFw3tmeMR8ym5K7BCfMLvpI';
+    const googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAqTDcwSQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=0mMIFS2n1trg5Pgm9ftzJ4g2UID44t8VoRykxreN9cY';
+    //const googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAuWppqUQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=TeZgmWj_1Gv5FLTIatL3IFw3tmeMR8ym5K7BCfMLvpI';
 
     const response = await fetch(googleChatWebhookUrl, {
       method: 'POST',
