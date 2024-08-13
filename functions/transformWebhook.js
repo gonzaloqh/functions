@@ -20,7 +20,7 @@ exports.handler = async (event) => {
         "url": artifact.url
       };
     }) || [];
-    const environment = data.automation.environmentName;
+    const environment = data.automation?.environmentName; // Verificación opcional
 
     // Determina el emoji basado en el estado
     const stateEmoji = buildState === 'SUCCESS' ? '🟢' : '🔴';
@@ -44,13 +44,13 @@ exports.handler = async (event) => {
                     icon: "FLIGHT_DEPARTURE"
                   }
                 },
-                {
+                ...(environment ? [{
                   keyValue: {
                     topLabel: "Environment",
                     content: environment,
                     icon: "BOOKMARK"
                   }
-                },
+                }] : []),
                 {
                   keyValue: {
                     topLabel: "Fecha de Creación",
