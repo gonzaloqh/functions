@@ -39,14 +39,14 @@ exports.handler = async (event) => {
                   keyValue: {
                     topLabel: "Branch",
                     content: branchName,
-                    icon: "CLOCK"
+                    icon: "FLIGHT_DEPARTURE"
                   }
                 },
                 {
                   keyValue: {
                     topLabel: "Environment",
                     content: environment,
-                    icon: "CLOCK"
+                    icon: "BOOKMARK"
                   }
                 },
                 {
@@ -74,8 +74,6 @@ exports.handler = async (event) => {
                   keyValue: {
                     topLabel: "Estado",
                     content: buildState,
-                    contentMultiline: true,
-                    bottomLabel: stateEmoji,
                     icon: "DESCRIPTION"
                   }
                 }
