@@ -3,6 +3,8 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
+    console.info("Origina Received: ", data)
+
 
     const buildNumber = data.buildInfo.id;
     const buildState = data.state.toUpperCase();
@@ -100,14 +102,18 @@ exports.handler = async (event) => {
       ]
     };
 
-    //const googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAqTDcwSQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=0mMIFS2n1trg5Pgm9ftzJ4g2UID44t8VoRykxreN9cY';
     const googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAuWppqUQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=TeZgmWj_1Gv5FLTIatL3IFw3tmeMR8ym5K7BCfMLvpI';
+    console.info("Send to: ", googleChatWebhookUrl)
+    console.info("Sending: ", googleChatWebhookUrl)
 
     const response = await fetch(googleChatWebhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(googleChatPayload),
     });
+
+    console.info("Response: ", response)
+
 
     if (!response.ok) {
       throw new Error(`Error al enviar el webhook a Google Chat: ${response.statusText}`);
@@ -117,6 +123,7 @@ exports.handler = async (event) => {
       statusCode: 200,
       body: JSON.stringify(googleChatPayload),
     };
+
   } catch (error) {
     return {
       statusCode: 500,
