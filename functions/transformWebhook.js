@@ -1,10 +1,9 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
-    console.info("Origina Received: ", data)
-
+    console.info("Original Received: ", data);
 
     const buildNumber = data.buildInfo.id;
     const buildState = data.state.toUpperCase();
@@ -12,15 +11,18 @@ exports.handler = async (event) => {
     const finishedDate = data.finished;
     const appName = data.app.name;
     const mergeBy = data.commit.user.name;
-    const branchName = data.commit.ref;  // Extracción del nombre de la rama
+    const branchName = data.commit.ref;
     const downloadLinks = data.artifacts?.map(artifact => {
       const extension = artifact.name.split('.').pop().toUpperCase();
       return {
-        "text": `Descargar .${extension}`,
-        "url": artifact.url
+        text: `Descargar .${extension}`,
+        url: artifact.url
       };
     }) || [];
-    const environment = data.automation?.environmentName; // Verificación opcional
+    const environment = data.automation?.environmentName;
+
+    // Verificación del campo platform y asignación del valor correspondiente
+    const platform = data.platform ? data.platform.toUpperCase() : "WEB";
 
     // Determina el emoji basado en el estado
     const stateEmoji = buildState === 'SUCCESS' ? '🟢' : '🔴';
@@ -51,6 +53,13 @@ exports.handler = async (event) => {
                     icon: "BOOKMARK"
                   }
                 }] : []),
+                {
+                  keyValue: {
+                    topLabel: "Plataforma",
+                    content: platform,
+                    icon: "LAPTOP_MAC"  // Puedes cambiar el icono según prefieras
+                  }
+                },
                 {
                   keyValue: {
                     topLabel: "Fecha de Creación",
@@ -103,8 +112,8 @@ exports.handler = async (event) => {
     };
 
     const googleChatWebhookUrl = 'https://chat.googleapis.com/v1/spaces/AAAAuWppqUQ/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=TeZgmWj_1Gv5FLTIatL3IFw3tmeMR8ym5K7BCfMLvpI';
-    console.info("Send to: ", googleChatWebhookUrl)
-    console.info("Sending: ", googleChatWebhookUrl)
+    console.info("Send to: ", googleChatWebhookUrl);
+    console.info("Sending: ", googleChatPayload);
 
     const response = await fetch(googleChatWebhookUrl, {
       method: 'POST',
@@ -112,8 +121,7 @@ exports.handler = async (event) => {
       body: JSON.stringify(googleChatPayload),
     });
 
-    console.info("Response: ", response)
-
+    console.info("Response: ", response);
 
     if (!response.ok) {
       throw new Error(`Error al enviar el webhook a Google Chat: ${response.statusText}`);
@@ -125,7 +133,7 @@ exports.handler = async (event) => {
     };
 
   } catch (error) {
-    console.error("Error: ", error)
+    console.error("Error: ", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
