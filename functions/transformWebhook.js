@@ -57,7 +57,7 @@ exports.handler = async (event) => {
                   keyValue: {
                     topLabel: "Plataforma",
                     content: platform,
-                    icon: "LAPTOP_MAC"  // Puedes cambiar el icono según prefieras
+                    icon: "VIDEO_PLAY"  // Puedes cambiar el icono según prefieras
                   }
                 },
                 {
